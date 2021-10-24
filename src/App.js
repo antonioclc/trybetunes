@@ -13,11 +13,13 @@ class App extends React.Component {
     super();
 
     this.onInputChange = this.onInputChange.bind(this);
-    this.btnEnable = this.btnEnable.bind(this);
+    this.btnEnable = this.loginBtnEnable.bind(this);
 
     this.state = {
       loginName: '',
       loginButtonDisabled: true,
+      searchInput: '',
+      searchButtonDisabled: true,
     };
   }
 
@@ -26,10 +28,15 @@ class App extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value,
-    }, () => this.btnEnable());
+    }, () => this.verifyBtn());
   }
 
-  btnEnable() {
+  verifyBtn() {
+    this.loginBtnEnable();
+    this.searchBtnEnable();
+  }
+
+  loginBtnEnable() {
     const { loginName } = this.state;
     const minimumLoginSize = 3;
     if (loginName.length >= minimumLoginSize) {
@@ -39,6 +46,20 @@ class App extends React.Component {
     } else {
       this.setState({
         loginButtonDisabled: true,
+      });
+    }
+  }
+
+  searchBtnEnable() {
+    const { searchInput } = this.state;
+    const minimumLoginSize = 2;
+    if (searchInput.length >= minimumLoginSize) {
+      this.setState({
+        searchButtonDisabled: false,
+      });
+    } else {
+      this.setState({
+        searchButtonDisabled: true,
       });
     }
   }
@@ -53,11 +74,19 @@ class App extends React.Component {
             render={ (props) => (<Login
               { ...props }
               { ...this.state }
-              btnEnable={ this.btnEnable }
               onInputChange={ this.onInputChange }
             />) }
           />
-          <Route path="/search" component={ Search } />
+          <Route
+            exact
+            path="/search"
+            render={ (props) => (<Search
+              { ...props }
+              { ...this.state }
+              onInputChange={ this.onInputChange }
+              searchBtnEnable={ this.searchBtnEnable }
+            />) }
+          />
           <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
           <Route exact path="/profile" component={ Profile } />

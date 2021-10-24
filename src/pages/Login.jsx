@@ -19,7 +19,6 @@ class Login extends React.Component {
 
   redirectSearch() {
     const { loading } = this.state;
-    console.log('oi');
     return (
       <Router>
         {loading ? null : <Redirect to="/search" />}
@@ -58,15 +57,14 @@ class Login extends React.Component {
             type="text"
             data-testid="login-name-input"
           />
+          <button
+            type="submit"
+            data-testid="login-submit-button"
+            disabled={ loginButtonDisabled }
+          >
+            Entrar
+          </button>
         </label>
-
-        <button
-          type="submit"
-          data-testid="login-submit-button"
-          disabled={ loginButtonDisabled }
-        >
-          Entrar
-        </button>
       </form>
     );
   }
