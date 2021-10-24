@@ -18,8 +18,7 @@ class Search extends React.Component {
     };
   }
 
-  async searchSubmit(event) {
-    event.preventDefault();
+  async searchSubmit() {
     const { searchInput, clearSearchInput } = this.props;
     this.setState({
       loading: true,
