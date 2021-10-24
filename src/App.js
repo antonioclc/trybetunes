@@ -13,7 +13,9 @@ class App extends React.Component {
     super();
 
     this.onInputChange = this.onInputChange.bind(this);
-    this.btnEnable = this.loginBtnEnable.bind(this);
+    this.loginBtnEnable = this.loginBtnEnable.bind(this);
+    this.searchBtnEnable = this.searchBtnEnable.bind(this);
+    this.clearSearchInput = this.clearSearchInput.bind(this);
 
     this.state = {
       loginName: '',
@@ -64,6 +66,12 @@ class App extends React.Component {
     }
   }
 
+  clearSearchInput() {
+    this.setState({
+      searchInput: '',
+    });
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -85,6 +93,7 @@ class App extends React.Component {
               { ...this.state }
               onInputChange={ this.onInputChange }
               searchBtnEnable={ this.searchBtnEnable }
+              clearSearchInput={ this.clearSearchInput }
             />) }
           />
           <Route path="/album/:id" component={ Album } />
