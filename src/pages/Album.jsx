@@ -9,6 +9,8 @@ class Album extends React.Component {
     super();
 
     this.getMusicFromApi = this.getMusicFromApi.bind(this);
+    this.loadingFavorite = this.loadingFavorite.bind(this);
+    this.loadedFavorite = this.loadedFavorite.bind(this);
 
     this.state = {
       loading: false,
@@ -35,6 +37,14 @@ class Album extends React.Component {
     });
   }
 
+  loadingFavorite() {
+    this.setState({ loading: true });
+  }
+
+  loadedFavorite() {
+    this.setState({ loading: false });
+  }
+
   render() {
     const { loading, artist, collection, tracks } = this.state;
     return (
@@ -51,7 +61,11 @@ class Album extends React.Component {
                     tracks.map((track) => {
                       if (track.trackId !== undefined) {
                         return (
-                          <MusicCard track={ track } />
+                          <MusicCard
+                            track={ track }
+                            loadingFavorite={ this.loadingFavorite }
+                            loadedFavorite={ this.loadedFavorite }
+                          />
                         );
                       } return null;
                     })
