@@ -3,30 +3,33 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   constructor() {
     super();
 
     this.getMusicFromApi = this.getMusicFromApi.bind(this);
-    this.loadingFavorite = this.loadingFavorite.bind(this);
-    this.loadedFavorite = this.loadedFavorite.bind(this);
+    this.verifyFavorites = this.verifyFavorites.bind(this);
 
     this.state = {
       loading: false,
       artist: '',
       collection: '',
       tracks: [],
+      favorites: [],
     };
   }
 
   componentDidMount() {
     this.getMusicFromApi();
+    this.verifyFavorites();
   }
 
   async getMusicFromApi() {
     const { match: { params: { id } } } = this.props;
     this.setState({ loading: true });
+    const favoritesList = await getFavoriteSongs();
     const playlist = await getMusics(id);
     const { artistName, collectionName } = playlist[0];
     this.setState({
@@ -34,19 +37,16 @@ class Album extends React.Component {
       artist: artistName,
       collection: collectionName,
       tracks: [...playlist],
+      favorites: [...favoritesList],
     });
   }
 
-  loadingFavorite() {
-    this.setState({ loading: true });
-  }
+  verifyFavorites() {
 
-  loadedFavorite() {
-    this.setState({ loading: false });
   }
 
   render() {
-    const { loading, artist, collection, tracks } = this.state;
+    const { loading, artist, collection, tracks, favorites } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -63,8 +63,7 @@ class Album extends React.Component {
                         return (
                           <MusicCard
                             track={ track }
-                            loadingFavorite={ this.loadingFavorite }
-                            loadedFavorite={ this.loadedFavorite }
+                            favorites={ favorites }
                           />
                         );
                       } return null;
