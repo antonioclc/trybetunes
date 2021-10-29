@@ -10,7 +10,6 @@ class Album extends React.Component {
     super();
 
     this.getMusicFromApi = this.getMusicFromApi.bind(this);
-    this.verifyFavorites = this.verifyFavorites.bind(this);
 
     this.state = {
       loading: false,
@@ -23,7 +22,6 @@ class Album extends React.Component {
 
   componentDidMount() {
     this.getMusicFromApi();
-    this.verifyFavorites();
   }
 
   async getMusicFromApi() {
@@ -39,10 +37,6 @@ class Album extends React.Component {
       tracks: [...playlist],
       favorites: [...favoritesList],
     });
-  }
-
-  verifyFavorites() {
-
   }
 
   render() {
