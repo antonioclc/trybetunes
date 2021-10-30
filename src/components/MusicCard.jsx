@@ -96,6 +96,8 @@ MusicCard.propTypes = {
   trackName: PropTypes.string.isRequired,
   track: PropTypes.objectOf.isRequired,
   favorites: PropTypes.arrayOf.isRequired,
+  loadingOn: PropTypes.func.isRequired,
+  loadingOff: PropTypes.func.isRequired,
 };
 
 export default MusicCard;
