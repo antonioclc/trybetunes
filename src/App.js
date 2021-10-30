@@ -126,7 +126,15 @@ class App extends React.Component {
             />) }
           />
           <Route exact path="/profile" component={ Profile } />
-          <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route
+            path="/profile/edit"
+            render={ (props) => (<ProfileEdit
+              { ...props }
+              { ...this.state }
+              loadingOn={ this.loadingOn }
+              loadingOff={ this.loadingOff }
+            />) }
+          />
           <Route path="*" component={ NotFound } />
         </Switch>
       </BrowserRouter>
