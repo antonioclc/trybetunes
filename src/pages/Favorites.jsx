@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import { getFavoriteSongs } from '../services/favoriteSongsAPI';
@@ -52,5 +53,11 @@ class Favorites extends React.Component {
     );
   }
 }
+
+Favorites.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  loadingOff: PropTypes.func.isRequired,
+  loadingOn: PropTypes.func.isRequired,
+};
 
 export default Favorites;
