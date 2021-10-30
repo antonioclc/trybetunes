@@ -16,12 +16,15 @@ class App extends React.Component {
     this.loginBtnEnable = this.loginBtnEnable.bind(this);
     this.searchBtnEnable = this.searchBtnEnable.bind(this);
     this.clearSearchInput = this.clearSearchInput.bind(this);
+    this.loadingOn = this.loadingOn.bind(this);
+    this.loadingOff = this.loadingOff.bind(this);
 
     this.state = {
       loginName: '',
       loginButtonDisabled: true,
       searchInput: '',
       searchButtonDisabled: true,
+      loading: false,
     };
   }
 
@@ -72,6 +75,14 @@ class App extends React.Component {
     });
   }
 
+  loadingOn() {
+    this.setState({ loading: true });
+  }
+
+  loadingOff() {
+    this.setState({ loading: false });
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -96,8 +107,24 @@ class App extends React.Component {
               clearSearchInput={ this.clearSearchInput }
             />) }
           />
-          <Route path="/album/:id" component={ Album } />
-          <Route path="/favorites" component={ Favorites } />
+          <Route
+            path="/album/:id"
+            render={ (props) => (<Album
+              { ...props }
+              { ...this.state }
+              loadingOn={ this.loadingOn }
+              loadingOff={ this.loadingOff }
+            />) }
+          />
+          <Route
+            path="/favorites"
+            render={ (props) => (<Favorites
+              { ...props }
+              { ...this.state }
+              loadingOn={ this.loadingOn }
+              loadingOff={ this.loadingOff }
+            />) }
+          />
           <Route exact path="/profile" component={ Profile } />
           <Route path="/profile/edit" component={ ProfileEdit } />
           <Route path="*" component={ NotFound } />

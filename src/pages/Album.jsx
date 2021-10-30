@@ -41,6 +41,7 @@ class Album extends React.Component {
 
   render() {
     const { loading, artist, collection, tracks, favorites } = this.state;
+    const { loadingOn, loadingOff } = this.props;
     return (
       <div data-testid="page-album">
         <Header />
@@ -58,6 +59,8 @@ class Album extends React.Component {
                           <MusicCard
                             track={ track }
                             favorites={ favorites }
+                            loadingOn={ loadingOn }
+                            loadingOff={ loadingOff }
                           />
                         );
                       } return null;

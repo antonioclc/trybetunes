@@ -40,17 +40,20 @@ class MusicCard extends React.Component {
 
   async addOrRemoveSong() {
     const { isChecked } = this.state;
-    const { track } = this.props;
+    const { track, loadingOn, loadingOff } = this.props;
+    loadingOn();
     if (isChecked) {
       await addSong(track);
       this.setState({
         loading: false,
       });
+      loadingOff();
     } else {
       await removeSong(track);
       this.setState({
         loading: false,
       });
+      loadingOff();
     }
   }
 
